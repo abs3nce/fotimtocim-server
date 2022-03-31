@@ -22,8 +22,9 @@ const redisClient = redis.createClient({
 app.use(
     session({
         store: new RedisStore({ client: redisClient }),
-        secret: process.env.SESSION_SECRET,
-        saveUnitialized: false,
+        secret:
+            process.env.SESSION_SECRET,
+        saveUninitialized: false,
         resave: false,
         cookie: {
             name: "sessionId", //zmenenie mena aby sa nedala zistit pouzita technologia
@@ -44,18 +45,27 @@ app.post("/login", (req, res) => {
     req.session.password = password;
     req.session._id = 91283091823908102983;
 
-    req.json("logged in");
+    res.json({ message: "logged in" });
 });
 
 //middleware na kontrolu autenticity uzivatela
 
 app.use((req, res, next) => {
     if (!req.session || !req.session._id) {
-        const err = new Error("invalid session");
-        err.statusCode = 401;
-        next(err);
+        // const err = new Error("invalid session");
+        // err.statusCode = 401;
+        // next(err);
+        return res.status(401).json({message:"ERROR, not authorized"})
     }
     next();
 });
 
 //protected routes
+
+app.get("/profile", (req, res) => {
+    res.json(req.session);
+});
+
+app.listen(process.env.PORT, () =>
+    console.log(`Server listening on port ${process.env.PORT}`)
+);
