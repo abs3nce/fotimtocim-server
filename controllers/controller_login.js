@@ -1,10 +1,10 @@
-const loginUser = (req, res) => {
+async function loginUser (req, res) {
     const { username, password } = req;
 
     //logika na overovanie spravnosti udajov
 
     //dummy udaje
-    req.session.user = {
+    req.session.user = await {
         clientId: "91283091823908102983",
         clientUsername: "abs3nce",
     };

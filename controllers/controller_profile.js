@@ -1,4 +1,4 @@
-const getUser = (req, res) => {
+async function getUser (req, res) {
     res.json(req.session);
 };
 
