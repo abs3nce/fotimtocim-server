@@ -6,6 +6,7 @@ require("dotenv").config();
 
 //init express
 const app = express();
+app.use(express.json());
 
 //nastavenie proxy
 app.set("trust proxy", 1); //ak budem pouzivat nginx proxy tak toto treba zapnut (nginx for sure)

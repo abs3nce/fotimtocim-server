@@ -1,5 +1,13 @@
-async function loginUser (req, res) {
-    const { username, password } = req;
+async function loginUser(req, res) {
+    const { username, password } = req.body;
+
+    //payload validation
+    if (!username || !password) {
+        res.status(401).json({
+            message:
+                "Unauthorized - Bad request parameters. You need to provide username and password.",
+        });
+    }
 
     //logika na overovanie spravnosti udajov
 
@@ -10,6 +18,6 @@ async function loginUser (req, res) {
     };
 
     res.json({ message: "logged in" });
-};
+}
 
 module.exports = { loginUser };
